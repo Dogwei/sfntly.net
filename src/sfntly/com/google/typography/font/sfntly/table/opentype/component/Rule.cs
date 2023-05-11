@@ -1,5 +1,6 @@
 using com.google.typography.font.sfntly.table.core;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace com.google.typography.font.sfntly.table.opentype.component;
@@ -221,7 +222,7 @@ public class Rule
                     {
                         glyphGroup.add(glyph);
                     }
-                    // Console.WriteLine("code: " + code + " glyph: " + glyph + " platform: " + cmap.platformId() + " encodingId: " + cmap.encodingId() + " format: " + cmap.format());
+                    // Debug.WriteLine("code: " + code + " glyph: " + glyph + " platform: " + cmap.platformId() + " encodingId: " + cmap.encodingId() + " format: " + cmap.format());
 
                 }
             }

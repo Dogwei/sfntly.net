@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>11</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
-    <PackageVersion>0.0.1-bate</PackageVersion>
+    <PackageVersion>0.0.2-bate</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

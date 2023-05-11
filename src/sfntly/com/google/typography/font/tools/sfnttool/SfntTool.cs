@@ -20,6 +20,7 @@ using com.google.typography.font.sfntly.table.core;
 using com.google.typography.font.tools.conversion.eot;
 using com.google.typography.font.tools.conversion.woff;
 using com.google.typography.font.tools.subsetter;
+using System.Diagnostics;
 
 namespace com.google.typography.font.tools.sfnttool;
 
@@ -125,7 +126,7 @@ public class SfntTool
 
         if (tool.woff && tool.eot)
         {
-            Console.WriteLine("WOFF and EOT options are mutually exclusive");
+            Debug.WriteLine("WOFF and EOT options are mutually exclusive");
             return;
         }
 

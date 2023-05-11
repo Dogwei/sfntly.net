@@ -210,7 +210,7 @@ public class DataDisplayTable {
    * method.
    */
   public void prettyPrint() {
-    Console.WriteLine(prettyString());
+    Debug.WriteLine(prettyString());
   }
 
   /**

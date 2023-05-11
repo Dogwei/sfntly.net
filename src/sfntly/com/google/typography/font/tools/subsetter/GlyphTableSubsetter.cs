@@ -18,6 +18,7 @@ using com.google.typography.font.sfntly;
 using com.google.typography.font.sfntly.data;
 using com.google.typography.font.sfntly.table.core;
 using com.google.typography.font.sfntly.table.truetype;
+using System.Diagnostics;
 
 namespace com.google.typography.font.tools.subsetter;
 
@@ -52,7 +53,7 @@ public class GlyphTableSubsetter : TableSubsetterImpl {
   public override boolean subset(Subsetter subsetter, Font font, Font.Builder fontBuilder)
        {
     if (DEBUG) {
-      Console.WriteLine("GlyphTableSubsetter.subset()");
+      Debug.WriteLine("GlyphTableSubsetter.subset()");
     }
     IList<Integer> permutationTable = subsetter.glyphMappingTable();
     if (permutationTable == null) {
@@ -83,18 +84,18 @@ public class GlyphTableSubsetter : TableSubsetterImpl {
       ReadableFontData renumberedData = GlyphRenumberer.renumberGlyph(data, inverseMap);
       var glyphBuilder = glyphTableBuilder.glyphBuilder(renumberedData);
       if (DEBUG) {
-        Console.WriteLine("\toldGlyphId = " + oldGlyphId);
-        Console.WriteLine("\toldOffset = " + oldOffset);
-        Console.WriteLine("\toldLength = " + oldLength);
-        Console.WriteLine("\told glyph = " + glyph);
-        Console.WriteLine("\tnew glyph builder = " + glyphBuilder);
+        Debug.WriteLine("\toldGlyphId = " + oldGlyphId);
+        Debug.WriteLine("\toldOffset = " + oldOffset);
+        Debug.WriteLine("\toldLength = " + oldLength);
+        Debug.WriteLine("\told glyph = " + glyph);
+        Debug.WriteLine("\tnew glyph builder = " + glyphBuilder);
       }
       glyphBuilders.Add(glyphBuilder);
 
     }
     IList<Integer> locaList = glyphTableBuilder.generateLocaList();
     if (DEBUG) {
-      Console.WriteLine("\tlocaList = " + locaList);
+      Debug.WriteLine("\tlocaList = " + locaList);
     }
     locaTableBuilder.setLocaList(locaList);
         var maxpBuilder = (MaximumProfileTable.IBuilder)fontBuilder.getTableBuilder(Tag.maxp);

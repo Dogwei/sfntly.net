@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 
 namespace com.google.typography.font.sfntly.table.opentype.component;
@@ -32,7 +33,7 @@ public sealed class GsubLookupType : ClassEnumBase<GsubLookupType>, LookupType {
     {
         if (typeNum <= 0 || typeNum > _values.Length)
         {
-            Console.WriteLine("unknown gsub lookup typeNum: %d\n", typeNum);
+            Debug.WriteLine("unknown gsub lookup typeNum: %d\n", typeNum);
             return null;
         }
         return _values[typeNum - 1];

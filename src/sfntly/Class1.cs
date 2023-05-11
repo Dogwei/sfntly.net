@@ -37,7 +37,8 @@ using System.Collections;
 using System.Collections.Immutable;
 using System.Collections.Generic;
 using System.Runtime.Versioning;
-
+using System.Reflection;
+using System.Diagnostics.CodeAnalysis;
 
 static class MapExt
 {
@@ -144,21 +145,41 @@ static class Collections
     }
 }
 
-public abstract class ClassEnumBase<TClassEnum> where TClassEnum: ClassEnumBase<TClassEnum>
+public abstract class ClassEnumBase<TClassEnum> : IComparable<TClassEnum> where TClassEnum: ClassEnumBase<TClassEnum>
 {
+    static FieldInfo[] _fields = typeof(TClassEnum)
+        .GetFields(BindingFlags.Public | BindingFlags.Static)
+        .Where(x => x.FieldType == typeof(TClassEnum))
+        .ToArray();
+    static int init_ordinal = 0;
+
+    readonly int _ordinal;
+
+    public ClassEnumBase()
+    {
+        _ordinal = init_ordinal;
+
+        ++init_ordinal;
+    }
+
     public static TClassEnum[] values()
     {
-        throw new NotImplementedException();
+        return _fields.Select(x => (TClassEnum)x.GetValue(null)).ToArray();
+    }
+
+    public int CompareTo([AllowNull] TClassEnum other)
+    {
+        return _ordinal - other._ordinal;
     }
 
     public string name()
     {
-        throw new NotImplementedException();
+        return _fields[_ordinal].Name;
     }
 
     public int ordinal()
     {
-        throw new NotImplementedException();
+        return _ordinal;
     }
 }
 
@@ -288,12 +309,12 @@ static class NumberHelper
 {
     public static string toHexString(int value)
     {
-        throw new NotImplementedException();
+        return Convert.ToString(value, 16);
     }
 
     public static string toHexString(long value)
     {
-        throw new NotImplementedException();
+        return Convert.ToString(value, 16);
     }
 
     public static int numberOfLeadingZeros(int i)
@@ -376,40 +397,67 @@ public static class EnumSet
 
     internal static EnumSet<TEnum> noneOf<TEnum>()
     {
-        throw new NotImplementedException();
+        return new EnumSet<TEnum>();
+
     }
 
-    internal static EnumSet<TEnum> range<TEnum>(TEnum reserved7, TEnum reserved15)
+    internal static EnumSet<TEnum> allOf<TEnum>()
     {
-        throw new NotImplementedException();
+        if (typeof(TEnum).IsEnum)
+        {
+            return new EnumSet<TEnum>((TEnum[])Enum.GetValues(typeof(TEnum)));
+        }
+
+        return (EnumSet<TEnum>)typeof(EnumSet)
+            .GetMethod(nameof(InternalAllOf), BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)
+            .MakeGenericMethod(typeof(TEnum))
+            .Invoke(null, null);
+    }
+
+    internal static EnumSet<TClassEnum> InternalAllOf<TClassEnum>() where TClassEnum : ClassEnumBase<TClassEnum>
+    {
+        return new EnumSet<TClassEnum>(ClassEnumBase<TClassEnum>.values());
+    }
+
+    internal static EnumSet<TEnum> range<TEnum>(TEnum start, TEnum end)
+    {
+        var res = allOf<TEnum>();
+
+        res.RemoveWhere(x => !IsRange(x));
+
+        return res;
+
+        bool IsRange(TEnum item)
+        {
+            var s = Comparer<TEnum>.Default.Compare(item, start);
+            var e = Comparer<TEnum>.Default.Compare(item, end);
+
+            return s >= 0 && e <= 0;
+        }
     }
 }
 
-public sealed class EnumSet<TEnum>
+public sealed class EnumSet<TEnum> : HashSet<TEnum>
 {
-    public void add(TEnum v)
+    public EnumSet()
+    {
+
+    }
+
+    public EnumSet(IEnumerable<TEnum> collection):base(collection)
+    {
+
+    }
+
+    public void RemoveAll(EnumSet<TEnum> enumSet)
     {
         throw new NotImplementedException();
     }
 
-    public void removeAll(EnumSet<TEnum> enumSet)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void remove(TEnum v)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerator<TEnum> GetEnumerator()
-    {
-        throw new NotImplementedException();
-    }
 
     public bool isEmpty()
     {
-        throw new NotImplementedException();
+        return Count is 0;
     }
 }
 

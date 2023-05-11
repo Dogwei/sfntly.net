@@ -1376,7 +1376,12 @@ public sealed class NameTable : SubTableContainerTable
 
     public interface IBuilder : SubTableContainerTable.IBuilder<NameTable>
     {
-
+        void revertNames();
+        int builderCount();
+        void clear();
+        boolean has(int platformId, int encodingId, int languageId, int nameId);
+        NameEntryBuilder nameBuilder(int platformId, int encodingId, int languageId, int nameId);
+        boolean remove(int platformId, int encodingId, int languageId, int nameId);
     }
     private class Builder : SubTableContainerTable.Builder<NameTable>, IBuilder
     {
@@ -1449,8 +1454,7 @@ public sealed class NameTable : SubTableContainerTable
             return this.getNameBuilders().containsKey(probe);
         }
 
-        public NameEntryBuilder nameBuilder(
-            int platformId, int encodingId, int languageId, int nameId)
+        public NameEntryBuilder nameBuilder(int platformId, int encodingId, int languageId, int nameId)
         {
             NameEntryId probe = new NameEntryId(platformId, encodingId, languageId, nameId);
             NameEntryBuilder builder = this.getNameBuilders().get(probe);

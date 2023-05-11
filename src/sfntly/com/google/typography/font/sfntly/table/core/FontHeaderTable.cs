@@ -168,7 +168,7 @@ public sealed class FontHeaderTable : Table
             {
                 if ((value & flag.mask()) == flag.mask())
                 {
-                    set.add(flag);
+                    set.Add(flag);
                 }
             }
             return set;
@@ -187,8 +187,8 @@ public sealed class FontHeaderTable : Table
         public static int cleanValue(EnumSet<Flags> set)
         {
             EnumSet<Flags> clean = EnumSet.copyOf(set);
-            clean.remove(Flags.Reserved14);
-            clean.remove(Flags.Reserved15);
+            clean.Remove(Flags.Reserved14);
+            clean.Remove(Flags.Reserved15);
             return value(clean);
         }
     }
@@ -292,23 +292,24 @@ public sealed class FontHeaderTable : Table
     public sealed class MacStyle : ClassEnumBase<MacStyle>
     {
         public static readonly MacStyle
-        Bold,
-        Italic,
-        Underline,
-        Outline,
-        Shadow,
-        Condensed,
-        Extended,
-        Reserved7,
-        Reserved8,
-        Reserved9,
-        Reserved10,
-        Reserved11,
-        Reserved12,
-        Reserved13,
-        Reserved14,
-        Reserved15;
-        
+        Bold = new(),
+        Italic = new(),
+        Underline = new(),
+        Outline = new(),
+        Shadow = new(),
+        Condensed = new(),
+        Extended = new(),
+        Reserved7 = new(),
+        Reserved8 = new(),
+        Reserved9 = new(),
+        Reserved10 = new(),
+        Reserved11 = new(),
+        Reserved12 = new(),
+        Reserved13 = new(),
+        Reserved14 = new(),
+        Reserved15 = new();
+
+
     public int mask() {
       return 1 << this.ordinal();
     }
@@ -317,7 +318,7 @@ public sealed class FontHeaderTable : Table
       EnumSet<MacStyle> set = EnumSet.noneOf<MacStyle>();
       foreach(MacStyle style in MacStyle.values()) {
         if ((value & style.mask()) == style.mask()) {
-          set.add(style);
+          set.Add(style);
         }
       }
       return set;
@@ -333,7 +334,7 @@ public sealed class FontHeaderTable : Table
 
     public static int cleanValue(EnumSet<MacStyle> set) {
       EnumSet<MacStyle> clean = EnumSet.copyOf(set);
-      clean.removeAll(reserved);
+      clean.RemoveAll(reserved);
       return value(clean);
     }
 

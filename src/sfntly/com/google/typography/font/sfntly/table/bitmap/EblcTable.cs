@@ -16,6 +16,7 @@
 
 using com.google.typography.font.sfntly.data;
 using com.google.typography.font.sfntly.math;
+using System.Diagnostics;
 
 namespace com.google.typography.font.sfntly.table.bitmap;
 
@@ -288,7 +289,7 @@ public class EblcTable : SubTableContainerTable
             {
                 if (DEBUG)
                 {
-                    Console.WriteLine("size table = %d%n", sizeIndex++);
+                    Debug.WriteLine("size table = %d%n", sizeIndex++);
                 }
                 IDictionary<Integer, BitmapGlyphInfo> locaMap = sizeBuilder.generateLocaMap();
                 locaList.Add(locaMap);
@@ -350,7 +351,7 @@ public class EblcTable : SubTableContainerTable
                 int sizeBuilderSize = sizeBuilder.subDataSizeToSerialize();
                 if (DEBUG)
                 {
-                    Console.WriteLine("sizeIndex = 0x%x, sizeBuilderSize = 0x%x%n", sizeIndex++,
+                    Debug.WriteLine("sizeIndex = 0x%x, sizeBuilderSize = 0x%x%n", sizeIndex++,
                         sizeBuilderSize);
                 }
                 variable = sizeBuilderSize > 0 ? variable : true;
@@ -409,7 +410,7 @@ public class EblcTable : SubTableContainerTable
 
                 if (DEBUG)
                 {
-                    Console.WriteLine(
+                    Debug.WriteLine(
                         "size %d: sizeTable = %x, current subTable Block = %x, index subTable Start = %x%n",
                         sizeIndex, sizeTableOffset, currentSubTableBlockStartOffset, indexSubTableOffset);
                     sizeIndex++;
@@ -420,9 +421,9 @@ public class EblcTable : SubTableContainerTable
                 {
                     if (DEBUG)
                     {
-                        Console.WriteLine("\tsubTableIndex %d: format = %x, ", subTableIndex,
+                        Debug.WriteLine("\tsubTableIndex %d: format = %x, ", subTableIndex,
                             indexSubTableBuilder.indexFormat());
-                        Console.WriteLine("indexSubTableArrayOffset = %x, indexSubTableOffset = %x%n",
+                        Debug.WriteLine("indexSubTableArrayOffset = %x, indexSubTableOffset = %x%n",
                             indexSubTableArrayOffset, indexSubTableOffset);
                         subTableIndex++;
                     }
@@ -441,7 +442,7 @@ public class EblcTable : SubTableContainerTable
                         FontMath.paddingRequired(currentSubTableSize, (int)FontData.DataSize.ULONG);
                     if (DEBUG)
                     {
-                        Console.WriteLine(
+                        Debug.WriteLine(
                             "\t\tsubTableSize = %x, padding = %x%n", currentSubTableSize, padding);
                     }
 

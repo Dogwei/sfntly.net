@@ -21,6 +21,7 @@ using com.google.typography.font.sfntly.math;
 using com.google.typography.font.sfntly.table;
 using com.google.typography.font.sfntly.table.core;
 using com.google.typography.font.sfntly.table.truetype;
+using System.Diagnostics;
 
 
 /**
@@ -144,17 +145,16 @@ public class Font
      * @see NameTable
      * @see CMapTable
      */
-    public sealed class UnicodeEncodingId : ClassEnumBase<UnicodeEncodingId>
+    public enum UnicodeEncodingId
     {
-        public static readonly UnicodeEncodingId
         // Unicode Platform Encodings
-        Unknown = new(-1),
-        Unicode1_0 = new(0),
-        Unicode1_1 = new(1),
-        ISO10646 = new(2),
-        Unicode2_0_BMP = new(3),
-        Unicode2_0 = new(4),
-        UnicodeVariationSequences = new(5);
+        Unknown = (-1),
+        Unicode1_0 = (0),
+        Unicode1_1 = (1),
+        ISO10646 = (2),
+        Unicode2_0_BMP = (3),
+        Unicode2_0 = (4),
+        UnicodeVariationSequences = (5)/*;
 
         private readonly int _value;
 
@@ -183,7 +183,7 @@ public class Font
                 }
             }
             return Unknown;
-        }
+        }*/
     }
 
     /**
@@ -1017,12 +1017,12 @@ public class Font
         {
             IDictionary<Header, WritableFontData> tableData =
                 new Dictionary<Header, WritableFontData>(headers.Count);
-            Console.WriteLine("########  Reading Table Data");
+            Debug.WriteLine("########  Reading Table Data");
             foreach (Header tableHeader in headers)
             {
                 @is.skip(tableHeader.offset() - @is.position());
-                Console.WriteLine("\t" + tableHeader);
-                Console.WriteLine("\t\tStream Position = " + NumberHelper.toHexString((int)@is.position()));
+                Debug.WriteLine("\t" + tableHeader);
+                Debug.WriteLine("\t\tStream Position = " + NumberHelper.toHexString((int)@is.position()));
                 // don't close this or the whole stream is gone
                 FontInputStream tableIS = new FontInputStream(@is, tableHeader.length());
                 // TODO(stuartg): start tracking bad tables and other errors
@@ -1065,7 +1065,7 @@ public class Font
         {
             IDictionary<Header, WritableFontData> tableData =
                 new Dictionary<Header, WritableFontData>(headers.Count);
-            Console.WriteLine("########  Reading Table Data");
+            Debug.WriteLine("########  Reading Table Data");
             foreach (Header tableHeader in headers)
             {
                 WritableFontData data = fd.slice(tableHeader.offset(), tableHeader.length());

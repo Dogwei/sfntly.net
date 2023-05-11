@@ -197,23 +197,22 @@ private (int)Offset.int) {
     public sealed class EmbeddingFlags : ClassEnumBase<EmbeddingFlags>
     {
         public static readonly EmbeddingFlags
-        Reserved0,
-        RestrictedLicenseEmbedding,
-        PreviewAndPrintEmbedding,
-        EditableEmbedding,
-        Reserved4,
-        Reserved5,
-        Reserved6,
-        Reserved7,
-        NoSubsetting,
-        BitmapEmbeddingOnly,
-        Reserved10,
-        Reserved11,
-        Reserved12,
-        Reserved13,
-        Reserved14,
-        Reserved15
-            ;
+        Reserved0 = new(),
+        RestrictedLicenseEmbedding = new(),
+        PreviewAndPrintEmbedding = new(),
+        EditableEmbedding = new(),
+        Reserved4 = new(),
+        Reserved5 = new(),
+        Reserved6 = new(),
+        Reserved7 = new(),
+        NoSubsetting = new(),
+        BitmapEmbeddingOnly = new(),
+        Reserved10 = new(),
+        Reserved11 = new(),
+        Reserved12 = new(),
+        Reserved13 = new(),
+        Reserved14 = new(),
+        Reserved15 = new();
 
         /**
          * Returns the bit mask corresponding to this embedding flag.
@@ -239,7 +238,7 @@ private (int)Offset.int) {
             {
                 if ((value & flag.mask()) == flag.mask())
                 {
-                    set.add(flag);
+                    set.Add(flag);
                 }
             }
             return set;
@@ -543,7 +542,7 @@ private (int)Offset.int) {
                 }
                 if ((range[rangeIndex] & 1 << rangeBit) == 1 << rangeBit)
                 {
-                    set.add(ur);
+                    set.Add(ur);
                 }
             }
             return set;
@@ -586,16 +585,16 @@ private (int)Offset.int) {
     public sealed class FsSelection : ClassEnumBase<FsSelection>
     {
         public static readonly FsSelection
-        ITALIC,
-        UNDERSCORE,
-        NEGATIVE,
-        OUTLINED,
-        STRIKEOUT,
-        BOLD,
-        REGULAR,
-        USE_TYPO_METRICS,
-        WWS,
-        OBLIQUE;
+        ITALIC = new(),
+        UNDERSCORE = new(),
+        NEGATIVE = new(),
+        OUTLINED = new(),
+        STRIKEOUT = new(),
+        BOLD = new(),
+        REGULAR = new(),
+        USE_TYPO_METRICS = new(),
+        WWS = new(),
+        OBLIQUE = new();
 
         public int mask()
         {
@@ -609,7 +608,7 @@ private (int)Offset.int) {
             {
                 if ((value & selection.mask()) == selection.mask())
                 {
-                    set.add(selection);
+                    set.Add(selection);
                 }
             }
             return set;
@@ -774,7 +773,7 @@ private (int)Offset.int) {
                 }
                 if ((range[rangeIndex] & 1 << rangeBit) == 1 << rangeBit)
                 {
-                    set.add(cpr);
+                    set.Add(cpr);
                 }
             }
             return set;
